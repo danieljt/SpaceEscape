@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 133f13c3690403543b9e2509c70ac227, type: 3}
+  m_Name: GroundLocomotionState
+  m_EditorClassIdentifier: 
+  allowTransitionToSelf: 0
+  transitions:
+  - conditions:
+    - {fileID: 11400000, guid: 6b4e1befedc3cb14f8b5425b7716fcc0, type: 2}
+    trueState: {fileID: 11400000, guid: 114e598c28a3f8a4da712fa18dee10fb, type: 2}
+    falseState: {fileID: 0}
+  - conditions:
+    - {fileID: 11400000, guid: 70306314d15af8c478419fda9eeb2f1b, type: 2}
+    trueState: {fileID: 11400000, guid: 207b43c9603afeb479a6e4b3ab7fb6be, type: 2}
+    falseState: {fileID: 0}
+  - conditions:
+    - {fileID: 11400000, guid: f0d205fdf0c3a8945994447d477e0546, type: 2}
+    trueState: {fileID: 11400000, guid: c40b9c767f6f8604fb0fd49d890a2db1, type: 2}
+    falseState: {fileID: 0}

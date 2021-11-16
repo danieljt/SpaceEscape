@@ -16,4 +16,9 @@ public class SensorController : MonoBehaviour
 		bool hit = Physics2D.BoxCast(transform.position, boxSize, 0, Vector2.down, 0.05f, whatIsValid);
 		isTouching?.Invoke(hit);
 	}
+
+	private void OnDrawGizmos()
+	{
+		Gizmos.DrawCube(gameObject.transform.position, boxSize);
+	}
 }

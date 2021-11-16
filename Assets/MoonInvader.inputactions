@@ -15,16 +15,24 @@
                 },
                 {
                     "name": "Jump",
-                    "type": "Button",
+                    "type": "PassThrough",
                     "id": "6e56901e-fabe-42a3-bf9b-60f04419c02b",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "Hold"
                 },
                 {
                     "name": "Fire",
                     "type": "Button",
                     "id": "c7789711-886a-4edb-b2f8-63fce90a36d1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Dash",
+                    "type": "Button",
+                    "id": "774dcd46-4f04-4db9-90aa-b5b66669a8e8",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
@@ -133,8 +141,8 @@
                 {
                     "name": "",
                     "id": "09751879-ca27-4a8e-bdd8-d4002b558477",
-                    "path": "<Keyboard>/leftCtrl",
-                    "interactions": "",
+                    "path": "<Keyboard>/z",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Jump",
@@ -144,7 +152,7 @@
                 {
                     "name": "",
                     "id": "bca73d76-f664-4baf-8618-b8d58014d8ea",
-                    "path": "<Keyboard>/comma",
+                    "path": "<Keyboard>/j",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -154,8 +162,19 @@
                 },
                 {
                     "name": "",
+                    "id": "08827560-f04f-4e15-8718-f1ded5401d21",
+                    "path": "<Keyboard>/leftCtrl",
+                    "interactions": "Hold",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "dd554565-6439-452d-9ae4-e10b4a87d886",
-                    "path": "<Keyboard>/leftShift",
+                    "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -166,11 +185,33 @@
                 {
                     "name": "",
                     "id": "0b79f14f-6330-46c9-9c24-dd73d7692180",
-                    "path": "<Keyboard>/period",
+                    "path": "<Keyboard>/l",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Fire",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c92e2b2e-b277-40a6-a763-ff5759384890",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b7889265-40d3-492a-99d1-c1d45aad4ea4",
+                    "path": "<Keyboard>/k",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard&Mouse",
+                    "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

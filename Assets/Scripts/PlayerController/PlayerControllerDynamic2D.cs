@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,34 +7,58 @@ using UnityEngine.InputSystem;
 /// This is a dynamic controller for the player game object. This controller uses dynamic rigidbody
 /// physics. It changes the velocity of the player gameobject using velocity.
 /// </summary>
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(Health))]
 public class PlayerControllerDynamic2D : MonoBehaviour
 {
-	[Tooltip("Speed of the character")]
-	[SerializeField] protected float movementSpeed;
-	[Tooltip("Maximum reachable velocity of the player in any direction")]
-	[SerializeField] protected float maxMovementSpeed;
-	[Tooltip("Minimum jumping height of the character")]
-	[SerializeField] protected float jumpHeight;
+	[Tooltip("Maximum move speed of player")]
+	public float movementSpeed;
+	[Tooltip("Air acceleration of player")]
+	public float airAcceleration;
+	[Tooltip("The deacceleration of the player when no move input moving while in the air")]
+	public float airDeacceleration;
+	[Tooltip("The jump speed of the player")]
+	public float jumpSpeed;
+	[Tooltip("The minimum vertical speed where the player is allowed to jump")]
+	[SerializeField] protected float minimumSpeedBeforeAllowedJump;
+	[Tooltip("The total number of air jumps allowed by the player")]
+	[SerializeField] protected int numberOfAirJumps;
+
+	[Tooltip("The current state of the player")]
+	public StateMachineState currentState;
+	protected StateMachineState startingState;
+
+	// Internal variables
+	protected int jumpCounter = 0;
 
 	// Components to be used by the player
-	protected Transform playerTransform;
     protected Rigidbody2D playerBody;
     protected PlayerInput playerInput;
+	protected Animator animator;
 	protected SensorController groundCheck;
+	protected Health health;
 
-	// Input system action ID's
-	private Guid movementID;
-	private Guid jumpID;
-	private Guid fireID;
+	// Input actions
+	protected InputAction movementAction;
+	protected InputAction jumppAction;
+	protected InputAction dashAction;
+	protected Guid movementID;
 
 	// Action values
 	private Vector2 inputVector;
-	private float jump;
-	private float fire;
 
-	// Player velocity values
-	private float xVelocity;
-	private float yVelocity;
+	// The input context for this player
+	protected InputContext inputContext;
+
+	// Animator Hash values
+	protected int horizontalSpeedHash = Animator.StringToHash("horizontalSpeed");
+	protected int verticalSpeedHash = Animator.StringToHash("verticalSpeed");
+	protected int isGroundedHash = Animator.StringToHash("isGrounded");
+	protected int isAliveHash = Animator.StringToHash("isAlive");
+	protected int jumpPressedHash = Animator.StringToHash("isJumpPressed");
+	protected int jumpCompletedHash = Animator.StringToHash("isJumpCompleted");
+	protected int jumpCancelledHash = Animator.StringToHash("isJumpReleased");
 
 	// External force list 
 	private List<IExternalForce> externalForces = new List<IExternalForce>(16);
@@ -43,94 +66,129 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 	// Ground control
 	private bool isGrounded;
 
+	// Is the player alive?
+	private bool isAlive = true;
+
 	// Facing
 	private bool isFacingRight = true;
 
-	// Statemachine states
-
+	#region Unity messages
 	private void Awake()
 	{
-		playerTransform = GetComponent<Transform>();
 		playerBody = GetComponent<Rigidbody2D>();
 		playerInput = GetComponent<PlayerInput>();
+		animator = GetComponentInChildren<Animator>();
+		health = GetComponent<Health>();
 		groundCheck = GetComponentInChildren<SensorController>();
 
-		// Get input system ids
-		movementID = playerInput.currentActionMap.FindAction("move").id;
-		jumpID = playerInput.currentActionMap.FindAction("jump").id;
-		fireID = playerInput.currentActionMap.FindAction("fire").id;
+		// Get Player input actions
+		movementAction = playerInput.currentActionMap.FindAction("move");
+		jumppAction = playerInput.currentActionMap.FindAction("jump");
+		dashAction = playerInput.currentActionMap.FindAction("dash");
+		movementID = movementAction.id;
+
+		inputContext.isAliveHash = isAliveHash;
+		inputContext.horizontalSpeedHash = horizontalSpeedHash;
+		inputContext.verticalSpeedHash = verticalSpeedHash;
+		inputContext.isGroundedHash = isGroundedHash;
+		inputContext.jumpPressedHash = jumpPressedHash;
+		inputContext.jumpCompletedHash = jumpCompletedHash;
+		inputContext.jumpCancelledHash = jumpCancelledHash;
+
+		startingState = currentState;
 	}
 
 	private void OnEnable()
 	{
-		playerInput.onActionTriggered += HandleInput;
-		groundCheck.isTouching += IsGrounded;
+		playerInput.onActionTriggered += Move;
+		jumppAction.started += StartJump;
+		jumppAction.performed += PerformJump;
+		jumppAction.canceled += CancelJump;
+		groundCheck.isTouching += Grounded;
+		health.OnHealthZero += Die;
+		currentState = startingState;
+		inputContext.isAlive = true;
 	}
 
 	private void OnDisable()
 	{
-		playerInput.onActionTriggered -= HandleInput;
-		groundCheck.isTouching -= IsGrounded;
+		playerInput.onActionTriggered -= Move;
+		jumppAction.started -= StartJump;
+		jumppAction.performed -= PerformJump;
+		jumppAction.canceled -= CancelJump;
+		groundCheck.isTouching -= Grounded;
+		health.OnHealthZero -= Die;
 	}
 
 	private void FixedUpdate()
 	{
-		// Calculate player x velocity
-		xVelocity = inputVector.x * movementSpeed;
+		currentState.EvaluateTransitions(this, inputContext, playerBody);
+		currentState.StateFixedUpdate(this, inputContext, playerBody, animator);
+	}
+	#endregion
 
-		// Flip the character if needed
-		Flip();
-
-		// If the player is grounded, set velocity to 0. If however the player jumps,
-		// calculate the jumpvelocity and jump
-		if(isGrounded)
+	#region input functions
+	public void Move(InputAction.CallbackContext context)
+	{
+		if (context.action.id == movementID)
 		{
-			//yVelocity = 0;
-			if(jump > 0)
-			{
-				isGrounded = false;
-				yVelocity = CalculateJumpVelocity(jumpHeight);
-			}
+			inputVector = context.ReadValue<Vector2>();
 		}
 
-		// Apply gravity to the players y velocity when the player is in the air.
-		else
-		{
-			isGrounded = false;
-			yVelocity += Physics2D.gravity.y * Time.fixedDeltaTime;
-		}
+		inputContext.movementInput = inputVector;
+	}
 
-		// Apply the external velocity to the player
-		foreach(IExternalForce force in externalForces)
-		{
-			xVelocity += force.AddVelocity().x;
-			yVelocity += force.AddVelocity().y;
-		}
+	public void StartJump(InputAction.CallbackContext context)
+	{
+		inputContext.jumpPressed = true;
+		inputContext.jumpCompleted = false;
+		inputContext.jumpReleased = false;
+	}
 
-		//Debug.Log(xVelocity);
-		xVelocity = Mathf.Clamp(xVelocity, -maxMovementSpeed, maxMovementSpeed);
-		yVelocity = Mathf.Clamp(yVelocity, -maxMovementSpeed, maxMovementSpeed);
-		playerBody.velocity = new Vector2(xVelocity, yVelocity);
-		//Debug.Log(xVelocity + "      " + playerBody.velocity);
+	public void PerformJump(InputAction.CallbackContext context)
+	{
+		inputContext.jumpPressed = false;
+		inputContext.jumpCompleted = true;
+		inputContext.jumpReleased = false;
+	}
+
+	public void CancelJump(InputAction.CallbackContext context)
+	{
+		inputContext.jumpPressed = false;
+		inputContext.jumpCompleted = false;
+		inputContext.jumpReleased = true;
+	}
+
+	#endregion
+
+	/// <summary>
+	/// The player dies
+	/// </summary>
+	protected void Die()
+	{
+		isAlive = false;
+		inputContext.isAlive = isAlive;
 	}
 
 	/// <summary>
-	/// Calculate the jumping speed of the player given the height. This method assumes
-	/// no friction, drag or jump holds. With a holding jump the height can technically be larger.
+	/// Get the external velocities acting on this player
 	/// </summary>
-	/// <param name="height"> The jumping height</param>
 	/// <returns></returns>
-	private float CalculateJumpVelocity(float height)
+	public Vector2 ExternalForces()
 	{
-		float positiveGravity = Physics2D.gravity.y >= 0 ? Physics2D.gravity.y : -Physics2D.gravity.y;
-		return Mathf.Sqrt(2*positiveGravity*height);
+		Vector2 velocityVector = Vector2.zero;
+		foreach(IExternalForce force in externalForces)
+		{
+			velocityVector += force.AddVelocity();
+		}
+		return velocityVector;
 	}
 
 	/// <summary>
 	/// This method recieves messages from the SensorController child component.
 	/// </summary>
 	/// <param name="grounded"></param>
-	private void IsGrounded(bool grounded)
+	private void Grounded(bool grounded)
 	{
 		isGrounded = grounded;
 	}
@@ -138,38 +196,16 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 	/// <summary>
 	/// Flip the character
 	/// </summary>
-	private void Flip()
+	public void Flip()
 	{
 		if((isFacingRight && inputVector.x < 0) || (!isFacingRight && inputVector.x > 0))
 		{
-			playerTransform.Rotate(0, 180, 0);
+			transform.Rotate(0, 180, 0);
 			isFacingRight = !isFacingRight;
 		}
 	}
 
-	/// <summary>
-	/// This method handles the input of the player through the input system so that it can be used
-	/// by the controller.
-	/// </summary>
-	/// <param name="context"></param>
-	private void HandleInput(InputAction.CallbackContext context)
-	{
-		if(context.action.id == movementID)
-		{
-			inputVector = context.ReadValue<Vector2>();
-		}
-
-		if(context.action.id == jumpID)
-		{
-			jump = context.ReadValue<float>();
-		}
-
-		if(context.action.id == fireID)
-		{
-			fire = context.ReadValue<float>();
-		}
-	}
-
+	#region Collision
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		IExternalForce force = collision.GetComponent<IExternalForce>();
@@ -205,4 +241,80 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 			externalForces.Remove(force);
 		}
 	}
+	#endregion
+
+	/// <summary>
+	/// Transition to the new state
+	/// </summary>
+	/// <param name="newState"></param>
+	public void TransitionTo(StateMachineState newState)
+	{
+		if(currentState != null && newState != null)
+		{
+			if ((currentState == newState && currentState.allowTransitionToSelf) || (currentState != newState))
+			{
+				currentState.StateExit(this, inputContext, playerBody, animator);
+				currentState = newState;
+				newState.StateEnter(this, inputContext, playerBody, animator);
+			}
+		}
+	}
+
+	#region Get Set methods
+	/// <summary>
+	/// Is the player grounded
+	/// </summary>
+	public bool IsGrounded
+	{
+		get { return isGrounded; }
+	}
+
+	/// <summary>
+	/// The number of allowed air jumps
+	/// </summary>
+	public int NumberOfAirJumps
+	{
+		get { return numberOfAirJumps; }
+	}
+
+	/// <summary>
+	/// Use this to count the number of jumps the player has left
+	/// </summary>
+	public int JumpCounter
+	{
+		get { return jumpCounter; }
+		set { jumpCounter = value; }
+	}
+
+	/// <summary>
+	/// The minimum allowed speed before the player air jumps instead of the regular jumps
+	/// </summary>
+	public float MinimumSpeedBeforeAllowedJump
+	{
+		get { return minimumSpeedBeforeAllowedJump; }
+	}
+	#endregion
 }
+
+#region Helper structs
+/// <summary>
+/// Helper struct containing useful information about the players input and animator
+/// hashes from the input system and animator component.
+/// </summary>
+public struct InputContext
+{
+	public Vector2 movementInput;
+	public bool jumpPressed;
+	public bool jumpCompleted;
+	public bool jumpReleased;
+	public bool isAlive;
+
+	public int isAliveHash;
+	public int horizontalSpeedHash;
+	public int verticalSpeedHash;
+	public int jumpPressedHash;
+	public int jumpCompletedHash;
+	public int jumpCancelledHash;
+	public int isGroundedHash;
+}
+#endregion

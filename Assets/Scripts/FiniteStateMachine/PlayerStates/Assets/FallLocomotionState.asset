@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40bd9b579da136f4bbf28e50180ab56a, type: 3}
+  m_Name: FallLocomotionState
+  m_EditorClassIdentifier: 
+  allowTransitionToSelf: 0
+  transitions:
+  - conditions:
+    - {fileID: 11400000, guid: 76bad4cf802c2ad47ae2b0a1eef8bfed, type: 2}
+    trueState: {fileID: 11400000, guid: 26f71d9d56fccef43aeec10a2c509bea, type: 2}
+    falseState: {fileID: 0}
+  - conditions:
+    - {fileID: 11400000, guid: 7ba193c74068df04fb68a9c420e0205e, type: 2}
+    trueState: {fileID: 11400000, guid: 217b9cb3ea7c2b74ab619df1ee8be544, type: 2}
+    falseState: {fileID: 0}
+  - conditions:
+    - {fileID: 11400000, guid: f0d205fdf0c3a8945994447d477e0546, type: 2}
+    trueState: {fileID: 11400000, guid: c40b9c767f6f8604fb0fd49d890a2db1, type: 2}
+    falseState: {fileID: 0}

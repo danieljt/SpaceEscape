@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1543889098ce98c4a8803323fac13525, type: 3}
+  m_Name: AirJumpLocomotionState
+  m_EditorClassIdentifier: 
+  allowTransitionToSelf: 0
+  transitions:
+  - conditions:
+    - {fileID: 11400000, guid: 4d49120a51ce7ea47b1121f93be6c2d3, type: 2}
+    trueState: {fileID: 11400000, guid: 207b43c9603afeb479a6e4b3ab7fb6be, type: 2}
+    falseState: {fileID: 0}
+  - conditions:
+    - {fileID: 11400000, guid: f0d205fdf0c3a8945994447d477e0546, type: 2}
+    trueState: {fileID: 11400000, guid: c40b9c767f6f8604fb0fd49d890a2db1, type: 2}
+    falseState: {fileID: 0}
