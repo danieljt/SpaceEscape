@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 490978373757843850}
   - component: {fileID: 490978373757843848}
   - component: {fileID: 490978373757843849}
-  m_Layer: 9
+  m_Layer: 7
   m_Name: Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ Animator:
   m_GameObject: {fileID: 490978373757843851}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b1d6cfa7e4bbeac44b8dfb96d63bf8ad, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -115,8 +115,10 @@ GameObject:
   - component: {fileID: 490978374089399839}
   - component: {fileID: 490978374089399808}
   - component: {fileID: 490978374089399838}
-  - component: {fileID: -8288479780276625906}
-  m_Layer: 9
+  - component: {fileID: -3538347426415699458}
+  - component: {fileID: -762556484254411176}
+  - component: {fileID: -5965279551097072022}
+  m_Layer: 7
   m_Name: RayOfDeath
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,19 +148,19 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 490978374089399810}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
-  m_UseFullKinematicContacts: 0
+  m_UseFullKinematicContacts: 1
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 6200000, guid: baa60a6559b7d2049be633355873889e, type: 2}
+  m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &490978374089399808
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -198,7 +200,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 100
---- !u!114 &-8288479780276625906
+--- !u!114 &-3538347426415699458
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -207,7 +209,34 @@ MonoBehaviour:
   m_GameObject: {fileID: 490978374089399810}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c7d8c25b2acd0440b30cadb1b91a13b, type: 3}
+  m_Script: {fileID: 11500000, guid: 54d74034d10278343a16f485764fc635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: {x: -7, y: 0}
+--- !u!114 &-762556484254411176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490978374089399810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ab617ce558fcf949901a0f4cb35aab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maximumHealth: 1
+  health: 1
+--- !u!114 &-5965279551097072022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 490978374089399810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf2db11f6eb66db4ebf622555205662f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathBehaviour: 0
+  secondsBeforeDeath: 0
