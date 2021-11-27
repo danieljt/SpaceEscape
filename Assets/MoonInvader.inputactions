@@ -30,7 +30,7 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Dash",
+                    "name": "Pause",
                     "type": "Button",
                     "id": "774dcd46-4f04-4db9-90aa-b5b66669a8e8",
                     "expectedControlType": "Button",
@@ -196,22 +196,11 @@
                 {
                     "name": "",
                     "id": "c92e2b2e-b277-40a6-a763-ff5759384890",
-                    "path": "<Keyboard>/x",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
-                    "action": "Dash",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b7889265-40d3-492a-99d1-c1d45aad4ea4",
-                    "path": "<Keyboard>/k",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Dash",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

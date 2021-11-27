@@ -27,6 +27,9 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 
 	[Tooltip("The current state of the player")]
 	public StateMachineState currentState;
+
+	public GameManager gameManager;
+
 	protected StateMachineState startingState;
 
 	// Internal variables
@@ -42,8 +45,9 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 	// Input actions
 	protected InputAction movementAction;
 	protected InputAction jumppAction;
-	protected InputAction dashAction;
+	protected InputAction pauseAction;
 	protected Guid movementID;
+	protected Guid pauseID;
 
 	// Action values
 	private Vector2 inputVector;
@@ -84,8 +88,9 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 		// Get Player input actions
 		movementAction = playerInput.currentActionMap.FindAction("move");
 		jumppAction = playerInput.currentActionMap.FindAction("jump");
-		dashAction = playerInput.currentActionMap.FindAction("dash");
+		pauseAction = playerInput.currentActionMap.FindAction("Pause");
 		movementID = movementAction.id;
+		pauseID = pauseAction.id;
 
 		inputContext.isAliveHash = isAliveHash;
 		inputContext.horizontalSpeedHash = horizontalSpeedHash;
@@ -101,6 +106,7 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 	private void OnEnable()
 	{
 		playerInput.onActionTriggered += Move;
+		playerInput.onActionTriggered += Pause;
 		jumppAction.started += StartJump;
 		jumppAction.performed += PerformJump;
 		jumppAction.canceled += CancelJump;
@@ -113,6 +119,7 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 	private void OnDisable()
 	{
 		playerInput.onActionTriggered -= Move;
+		playerInput.onActionTriggered -= Pause;
 		jumppAction.started -= StartJump;
 		jumppAction.performed -= PerformJump;
 		jumppAction.canceled -= CancelJump;
@@ -157,6 +164,14 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 		inputContext.jumpPressed = false;
 		inputContext.jumpCompleted = false;
 		inputContext.jumpReleased = true;
+	}
+
+	public void Pause(InputAction.CallbackContext context)
+	{
+		if(context.action.id == pauseID)
+		{
+			inputContext.paused = !inputContext.paused;
+		}
 	}
 
 	#endregion
@@ -307,6 +322,7 @@ public struct InputContext
 	public bool jumpPressed;
 	public bool jumpCompleted;
 	public bool jumpReleased;
+	public bool paused;
 	public bool isAlive;
 
 	public int isAliveHash;
