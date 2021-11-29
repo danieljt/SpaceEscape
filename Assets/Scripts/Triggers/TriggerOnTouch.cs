@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,12 +9,14 @@ using UnityEngine;
 public class TriggerOnTouch : MonoBehaviour
 {
 	[SerializeField] protected GameEvent gameEvent;
+	public event Action OnTriggered;
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if(gameEvent != null)
 		{
 			gameEvent.Invoke();
+			OnTriggered?.Invoke();
 		}
 		else
 		{
