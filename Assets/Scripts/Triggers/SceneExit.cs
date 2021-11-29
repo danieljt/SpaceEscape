@@ -9,14 +9,11 @@ public class SceneExit : MonoBehaviour
 	[Tooltip("The level manager this script communicates with")]
 	public LevelManager levelManager;
 
-	[Tooltip("The scene to load using the scene index")]
-	public int sceneToLoad;
-
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if(levelManager != null)
 		{
-			levelManager.LevelComplete(sceneToLoad);
+			levelManager.LevelComplete(SceneManager.GetActiveScene().buildIndex);
 		}
 	}
 }

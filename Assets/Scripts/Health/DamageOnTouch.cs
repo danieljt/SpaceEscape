@@ -8,10 +8,11 @@ public class DamageOnTouch : MonoBehaviour
 {
 	[Tooltip("The damage done")]
 	public int damage;
+	protected Health health;
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		Health health = collision.gameObject.GetComponent<Health>();
+		health = collision.gameObject.GetComponentInParent<Health>();
 		if(health)
 		{
 			health.LoseHealth(damage);

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3647557197189888231}
   - component: {fileID: 6784438473151451371}
   - component: {fileID: 311827201039198518}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,11 +196,9 @@ GameObject:
   m_Component:
   - component: {fileID: 6389001732807688509}
   - component: {fileID: 6389001732807688483}
-  - component: {fileID: 1682465784926861668}
-  - component: {fileID: -3743520627276805865}
-  - component: {fileID: 1875398993261572407}
+  - component: {fileID: 4106119735236208230}
   m_Layer: 7
-  m_Name: MovingDeathRay
+  m_Name: PatrolingDeathRayLong
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -244,7 +242,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &1682465784926861668
+--- !u!114 &4106119735236208230
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -253,37 +251,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 6389001732807688510}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54d74034d10278343a16f485764fc635, type: 3}
+  m_Script: {fileID: 11500000, guid: 59beb40e9c133bb428d289c884329e3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-3743520627276805865
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6389001732807688510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ab617ce558fcf949901a0f4cb35aab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maximumHealth: 1
-  health: 1
---- !u!114 &1875398993261572407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6389001732807688510}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf2db11f6eb66db4ebf622555205662f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  deathBehaviour: 0
-  secondsBeforeDeath: 0
+  patrolPoints: []
+  velocity: 0
 --- !u!1 &6389001733096924855
 GameObject:
   m_ObjectHideFlags: 0
@@ -295,7 +267,7 @@ GameObject:
   - component: {fileID: 6389001733096924854}
   - component: {fileID: 2019074120575739863}
   - component: {fileID: 2636766717974442579}
-  m_Layer: 7
+  m_Layer: 9
   m_Name: Ray
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -311,7 +283,7 @@ Transform:
   m_GameObject: {fileID: 6389001733096924855}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 3, z: 1}
   m_Children:
   - {fileID: 3647557197189888231}
   m_Father: {fileID: 6389001732807688509}
@@ -381,7 +353,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6807759297863191694}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.5, z: 0}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1772516383704745825}
@@ -439,7 +411,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6807759298916636051}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1877373351245206841}

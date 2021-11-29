@@ -36,7 +36,6 @@ public class AddToGameObjectRuntimeSet : MonoBehaviour
 	{
 		if (behaviour == AddBehaviour.AwakeAndDestroy && isDisabledOnStart)
 		{
-			Debug.Log(gameObject);
 			gameObject.SetActive(false);
 		}
 	}
