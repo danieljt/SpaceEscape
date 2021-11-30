@@ -12,6 +12,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Health))]
 public class PlayerControllerDynamic2D : MonoBehaviour
 {
+	[Tooltip("The game manager this player communicates with")]
+	public GameManager gameManager;
 	[Tooltip("Maximum move speed of player")]
 	public float movementSpeed;
 	[Tooltip("Air acceleration of player")]
@@ -20,22 +22,30 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 	public float airDeacceleration;
 	[Tooltip("The jump speed of the player")]
 	public float jumpSpeed;
-	[Tooltip("The minimum vertical speed where the player is allowed to jump")]
-	[SerializeField] protected float minimumSpeedBeforeAllowedJump;
+	[Tooltip("The minimum speed before the player cant ground jump")]
+	public float minimumSpeedBeforeAllowedJump;
 	[Tooltip("The total number of air jumps allowed by the player")]
 	[SerializeField] protected int numberOfAirJumps;
 
+	[Tooltip("Audio for walking")]
+	public AudioClip walkClip;
+	[Tooltip("Audio for jumping")]
+	public AudioClip jumpClip;
+	[Tooltip("Audio for air jumping")]
+	public AudioClip airJumpClip;
+	[Tooltip("Audio for dying")]
+	public AudioClip deathClip;
+
 	[Tooltip("The current state of the player")]
 	public StateMachineState currentState;
-
-	public GameManager gameManager;
-
+	
 	protected StateMachineState startingState;
 
 	// Internal variables
 	protected int jumpCounter = 0;
 
 	// Components to be used by the player
+	protected AudioSource audioSource;
     protected Rigidbody2D playerBody;
     protected PlayerInput playerInput;
 	protected Animator animator;
@@ -64,9 +74,6 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 	protected int jumpCompletedHash = Animator.StringToHash("isJumpCompleted");
 	protected int jumpCancelledHash = Animator.StringToHash("isJumpReleased");
 
-	// External force list 
-	private List<IExternalForce> externalForces = new List<IExternalForce>(16);
-
 	// Ground control
 	private bool isGrounded;
 
@@ -82,6 +89,7 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 		playerBody = GetComponent<Rigidbody2D>();
 		playerInput = GetComponent<PlayerInput>();
 		animator = GetComponentInChildren<Animator>();
+		audioSource = GetComponent<AudioSource>();
 		health = GetComponent<Health>();
 		groundCheck = GetComponentInChildren<SensorController>();
 
@@ -114,6 +122,7 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 		health.OnHealthZero += Die;
 		currentState = startingState;
 		inputContext.isAlive = true;
+		jumpCounter = numberOfAirJumps;
 	}
 
 	private void OnDisable()
@@ -186,20 +195,6 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Get the external velocities acting on this player
-	/// </summary>
-	/// <returns></returns>
-	public Vector2 ExternalForces()
-	{
-		Vector2 velocityVector = Vector2.zero;
-		foreach(IExternalForce force in externalForces)
-		{
-			velocityVector += force.AddVelocity();
-		}
-		return velocityVector;
-	}
-
-	/// <summary>
 	/// This method recieves messages from the SensorController child component.
 	/// </summary>
 	/// <param name="grounded"></param>
@@ -219,44 +214,6 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 			isFacingRight = !isFacingRight;
 		}
 	}
-
-	#region Collision
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
-		IExternalForce force = collision.GetComponent<IExternalForce>();
-		if(force != null && !externalForces.Contains(force))
-		{
-			externalForces.Add(force);
-		}
-	}
-
-	private void OnTriggerExit2D(Collider2D collision)
-	{
-		IExternalForce force = collision.GetComponent<IExternalForce>();
-		if (force != null && externalForces.Contains(force))
-		{
-			externalForces.Remove(force);
-		}
-	}
-
-	private void OnCollisionEnter2D(Collision2D collision)
-	{
-		IExternalForce force = collision.gameObject.GetComponent<IExternalForce>();
-		if (force != null && !externalForces.Contains(force))
-		{
-			externalForces.Add(force);
-		}
-	}
-
-	private void OnCollisionExit2D(Collision2D collision)
-	{
-		IExternalForce force = collision.gameObject.GetComponent<IExternalForce>();
-		if (force != null && externalForces.Contains(force))
-		{
-			externalForces.Remove(force);
-		}
-	}
-	#endregion
 
 	/// <summary>
 	/// Transition to the new state
@@ -301,12 +258,9 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 		set { jumpCounter = value; }
 	}
 
-	/// <summary>
-	/// The minimum allowed speed before the player air jumps instead of the regular jumps
-	/// </summary>
-	public float MinimumSpeedBeforeAllowedJump
+	public AudioSource GetAudioSource
 	{
-		get { return minimumSpeedBeforeAllowedJump; }
+		get { return audioSource; }
 	}
 	#endregion
 }

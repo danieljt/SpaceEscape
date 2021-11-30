@@ -22,6 +22,7 @@ public class GameManager : ScriptableObject
 	// The total number of pickups collected and found during the application
 	protected int pickUpsCollected;
 	protected int pickUpsTotal;
+	protected int totalDeaths;
 
 	private void Awake()
 	{
@@ -111,6 +112,7 @@ public class GameManager : ScriptableObject
 	{
 		pickUpsCollected = 0;
 		pickUpsTotal = 0;
+		totalDeaths = 0;
 	}
 
 	public void Pause()
@@ -123,5 +125,20 @@ public class GameManager : ScriptableObject
 	{
 		Time.timeScale = 1;
 		OnResume?.Invoke();
+	}
+
+	public int PickUpsCollected
+	{
+		get { return pickUpsCollected; }
+	}
+
+	public int PickUpsTotal
+	{
+		get { return pickUpsTotal; }
+	}
+
+	public int TotalDeaths
+	{
+		get { return totalDeaths; }
 	}
 }

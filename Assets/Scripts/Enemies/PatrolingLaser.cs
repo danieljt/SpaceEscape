@@ -19,10 +19,21 @@ public class PatrolingLaser : MonoBehaviour
 	protected WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
 	protected int patrolPointIndex;
 
+	protected AudioSource audioSource;
+	protected Animator animator;
+	protected int onHash = Animator.StringToHash("isActive");
+
 	private void Awake()
 	{
 		rbody = GetComponent<Rigidbody2D>();
+		audioSource = GetComponent<AudioSource>();
+		animator = GetComponentInChildren<Animator>();
 		SetStartPoint();	
+	}
+
+	private void OnEnable()
+	{
+		animator.SetBool(onHash, true);
 	}
 
 	private void Start()
@@ -30,7 +41,13 @@ public class PatrolingLaser : MonoBehaviour
 		if (patrolPoints != null)
 		{
 			StartCoroutine(Move());
+			audioSource.Play();
 		}
+	}
+
+	private void OnDisable()
+	{
+		animator.SetBool(onHash, false);
 	}
 
 	/// <summary>

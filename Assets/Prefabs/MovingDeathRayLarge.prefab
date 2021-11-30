@@ -199,9 +199,9 @@ GameObject:
   - component: {fileID: 1682465784926861668}
   - component: {fileID: -3743520627276805865}
   - component: {fileID: 1875398993261572407}
-  - component: {fileID: 8701319006127108868}
+  - component: {fileID: 5739955927811956835}
   m_Layer: 7
-  m_Name: MovingDeathRay
+  m_Name: MovingDeathRayLarge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -285,7 +285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deathBehaviour: 0
   secondsBeforeDeath: 0
---- !u!82 &8701319006127108868
+--- !u!82 &5739955927811956835
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -408,7 +408,7 @@ Transform:
   m_GameObject: {fileID: 6389001733096924855}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 5, z: 1}
   m_Children:
   - {fileID: 3647557197189888231}
   m_Father: {fileID: 6389001732807688509}
@@ -478,7 +478,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6807759297863191694}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.5, z: 0}
+  m_LocalPosition: {x: 0, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1772516383704745825}
@@ -536,7 +536,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6807759298916636051}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1877373351245206841}

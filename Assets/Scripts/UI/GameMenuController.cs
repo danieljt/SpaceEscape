@@ -74,11 +74,6 @@ public class GameMenuController : MenuController
 		gameManager.Resume();
 	}
 
-	public void MainMenu()
-	{
-		gameManager.LoadMainMenu();
-	}
-
 	public void NextLevel(int level)
 	{
 		gameManager.LoadLevel(level);

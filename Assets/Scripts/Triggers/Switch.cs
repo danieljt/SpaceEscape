@@ -8,6 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(TriggerOnTouch))]
 public class Switch : MonoBehaviour
 {
+	protected AudioSource audioSource;
     protected Animator animator;
 	protected TriggerOnTouch triggerComponent;
 	protected int triggerHash = Animator.StringToHash("isActive");
@@ -15,6 +16,7 @@ public class Switch : MonoBehaviour
 
 	private void Awake()
 	{
+		audioSource = GetComponent<AudioSource>();
 		animator = GetComponentInChildren<Animator>();
 		triggerComponent = GetComponent<TriggerOnTouch>();
 	}
@@ -33,6 +35,7 @@ public class Switch : MonoBehaviour
 	{
 		if(!isActivated)
 		{
+			audioSource.PlayOneShot(audioSource.clip);
 			animator.SetTrigger(triggerHash);
 			isActivated = true;
 		}

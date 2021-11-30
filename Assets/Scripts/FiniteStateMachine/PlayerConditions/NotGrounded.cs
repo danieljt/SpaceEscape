@@ -12,7 +12,7 @@ public class NotGrounded : StateMachineCondition
 {
 	public override bool Evaluate(PlayerControllerDynamic2D owner, InputContext input, Rigidbody2D rbody)
 	{
-		if(!owner.IsGrounded && rbody.velocity.y < owner.MinimumSpeedBeforeAllowedJump)
+		if(!owner.IsGrounded && rbody.velocity.y < owner.minimumSpeedBeforeAllowedJump)
 		{
 			return true;
 		}

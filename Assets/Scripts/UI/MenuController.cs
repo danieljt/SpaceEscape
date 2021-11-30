@@ -26,18 +26,21 @@ public class MenuController : MonoBehaviour
 
 	private void SetUpSubMenus()
 	{
-		for(int i = 0; i < subMenus.Length; i++)
+		if (subMenus != null)
 		{
-			if(subMenus[i] != null)
+			for (int i = 0; i < subMenus.Length; i++)
 			{
-				if(subMenus[i].gameObject != firstActivated)
+				if (subMenus[i] != null)
 				{
-					subMenus[i].DisableCanvas();
-				}
+					if (subMenus[i].gameObject != firstActivated)
+					{
+						subMenus[i].DisableCanvas();
+					}
 
-				else
-				{
-					subMenus[i].EnableCanvas();
+					else
+					{
+						subMenus[i].EnableCanvas();
+					}
 				}
 			}
 		}
@@ -56,6 +59,14 @@ public class MenuController : MonoBehaviour
 		if(gameManager != null)
 		{
 			gameManager.QuitGame();
+		}
+	}
+
+	public void MainMenu()
+	{
+		if(gameManager != null)
+		{
+			gameManager.LoadMainMenu();
 		}
 	}
 

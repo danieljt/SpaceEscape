@@ -140,19 +140,8 @@
                 },
                 {
                     "name": "",
-                    "id": "09751879-ca27-4a8e-bdd8-d4002b558477",
-                    "path": "<Keyboard>/z",
-                    "interactions": "Hold",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "bca73d76-f664-4baf-8618-b8d58014d8ea",
-                    "path": "<Keyboard>/j",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
