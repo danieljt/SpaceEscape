@@ -7942,6 +7942,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 4453030645851796325, guid: 84473e1f2ff336c4fa6387bcf617af82, type: 3}
+    - target: {fileID: 2090743302028612884, guid: 52b4528fe63daec4898915f25dd123ef, type: 3}
+      propertyPath: levelManager
+      value: 
+      objectReference: {fileID: 11400000, guid: 238255762b0a42d4bbd76eae965efcbb, type: 2}
     - target: {fileID: 2090743302028612885, guid: 52b4528fe63daec4898915f25dd123ef, type: 3}
       propertyPath: m_Name
       value: Spawner

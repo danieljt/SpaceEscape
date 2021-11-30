@@ -17,8 +17,11 @@ public class LevelManager : ScriptableObject
 	// This is the number of pick ups the player has collected this scene.
 	[HideInInspector] public int pickUpsCollected;
 
+	// This is the number of deaths in the current level
+	[HideInInspector] public int totalDeaths;
+
 	// These events are fired when the level has been completed
-	public event Action<int, int, int> OnLevelComplete;
+	public event Action<int, int, int, int> OnLevelComplete;
 
 	private void OnEnable()
 	{
@@ -42,10 +45,11 @@ public class LevelManager : ScriptableObject
 	{
 		pickUpsCollected = 0;
 		numberOfPickUps = 0;
+		totalDeaths = 0;
 	}
 
 	public void LevelComplete(int scene)
 	{
-		OnLevelComplete?.Invoke(scene, pickUpsCollected, numberOfPickUps);
+		OnLevelComplete?.Invoke(scene, pickUpsCollected, numberOfPickUps, totalDeaths);
 	}
 }

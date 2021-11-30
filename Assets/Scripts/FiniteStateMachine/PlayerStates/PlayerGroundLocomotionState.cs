@@ -17,13 +17,32 @@ public class PlayerGroundLocomotionState : StateMachineState
 
 	public override void StateExit(PlayerControllerDynamic2D owner, InputContext input, Rigidbody2D rbody, Animator animator)
 	{
-
+		if (owner.GetAudioSource.isPlaying)
+		{
+			owner.GetAudioSource.Stop();
+		}
 	}
 
 	public override void StateFixedUpdate(PlayerControllerDynamic2D owner, InputContext input, Rigidbody2D rbody, Animator animator)
 	{
 		xVelocity = input.movementInput.x * owner.movementSpeed;
 		yVelocity = rbody.velocity.y;
+
+		if(Mathf.Pow(xVelocity, 2) > 0.001f)
+		{
+			if(!owner.GetAudioSource.isPlaying)
+			{
+				owner.GetAudioSource.clip = owner.walkClip;
+				owner.GetAudioSource.Play();
+			}
+		}
+		else
+		{
+			if(owner.GetAudioSource.isPlaying)
+			{
+				owner.GetAudioSource.Stop();
+			}
+		}
 
 		rbody.velocity = new Vector2(xVelocity, yVelocity);
 		owner.Flip();

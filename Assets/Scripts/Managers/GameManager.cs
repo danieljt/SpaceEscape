@@ -43,7 +43,7 @@ public class GameManager : ScriptableObject
 	/// The level is complete
 	/// </summary>
 	/// <param name="nextScene"></param>
-	public void LevelComplete(int nextScene, int newPickUpsCollected, int newPickUpsTotal)
+	public void LevelComplete(int nextScene, int newPickUpsCollected, int newPickUpsTotal, int deaths)
 	{
 		Time.timeScale = 0;
 		nextLevel = nextScene;

@@ -12,6 +12,7 @@ public class GameMenuController : MenuController
 	[SerializeField] protected Text levelCompleteText;
 	[SerializeField] protected Text pickUpsCollectedText;
 	[SerializeField] protected Text pickUpsTotalText;
+	[SerializeField] protected Text deathsTotalText;
 
 	private void OnEnable()
 	{
@@ -42,14 +43,15 @@ public class GameMenuController : MenuController
 	/// <summary>
 	/// Display the win screen for the level
 	/// </summary>
-	private void DisplayWinScreen(int scene, int pickUpsCollected, int numberOfPickUps)
+	private void DisplayWinScreen(int scene, int pickUpsCollected, int numberOfPickUps, int totalDeaths)
 	{
-		if (winScreenSubMenu && levelCompleteText && pickUpsCollectedText && pickUpsTotalText)
+		if (winScreenSubMenu && levelCompleteText && pickUpsCollectedText && pickUpsTotalText && deathsTotalText)
 		{
 			WinGame();
 			levelCompleteText.text = "Level " + scene + " Completed";
 			pickUpsCollectedText.text = "Pick ups collected: " + pickUpsCollected;
 			pickUpsTotalText.text = "Pick ups Total: " + numberOfPickUps;
+			deathsTotalText.text = "Deaths in level: " + totalDeaths;
 		}
 
 		else

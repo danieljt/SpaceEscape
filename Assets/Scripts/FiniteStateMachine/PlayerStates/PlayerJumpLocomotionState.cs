@@ -26,6 +26,8 @@ public class PlayerJumpLocomotionState : StateMachineState
 		yVelocity = owner.jumpSpeed;
 		rbody.velocity = new Vector2(xVelocity, yVelocity);
 
+		owner.GetAudioSource.PlayOneShot(owner.jumpClip);
+
 		animator.SetBool(input.jumpPressedHash, true);
 		animator.SetBool(input.jumpCompletedHash, false);
 		animator.SetBool(input.jumpCancelledHash, false);

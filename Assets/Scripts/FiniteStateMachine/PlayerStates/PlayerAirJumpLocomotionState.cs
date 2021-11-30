@@ -27,6 +27,8 @@ public class PlayerAirJumpLocomotionState : StateMachineState
 		xVelocity = Mathf.Clamp(xVelocity, -owner.movementSpeed, owner.movementSpeed);
 		rbody.velocity = new Vector2(xVelocity, yVelocity);
 
+		owner.GetAudioSource.PlayOneShot(owner.airJumpClip);
+		owner.GetJetPack.Play();
 		animator.SetBool(input.jumpPressedHash, true);
 		animator.SetBool(input.jumpCompletedHash, false);
 		animator.SetBool(input.jumpCancelledHash, false);
@@ -34,7 +36,7 @@ public class PlayerAirJumpLocomotionState : StateMachineState
 
 	public override void StateExit(PlayerControllerDynamic2D owner, InputContext input, Rigidbody2D rbody, Animator animator)
 	{
-
+		owner.GetJetPack.Stop();
 	}
 
 	public override void StateFixedUpdate(PlayerControllerDynamic2D owner, InputContext input, Rigidbody2D rbody, Animator animator)

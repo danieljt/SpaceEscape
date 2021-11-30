@@ -50,6 +50,7 @@ public class PlayerControllerDynamic2D : MonoBehaviour
     protected PlayerInput playerInput;
 	protected Animator animator;
 	protected SensorController groundCheck;
+	protected ParticleSystem jetPack;
 	protected Health health;
 
 	// Input actions
@@ -91,6 +92,7 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 		animator = GetComponentInChildren<Animator>();
 		audioSource = GetComponent<AudioSource>();
 		health = GetComponent<Health>();
+		jetPack = GetComponentInChildren<ParticleSystem>();
 		groundCheck = GetComponentInChildren<SensorController>();
 
 		// Get Player input actions
@@ -261,6 +263,11 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 	public AudioSource GetAudioSource
 	{
 		get { return audioSource; }
+	}
+
+	public ParticleSystem GetJetPack
+	{
+		get { return jetPack; }
 	}
 	#endregion
 }

@@ -8,12 +8,16 @@ using Cinemachine;
 /// </summary>
 public class PlayerSpawner : MonoBehaviour
 {
+	public LevelManager levelManager;
 	public GameObject player;
 	public CinemachineVirtualCamera vcam;
 	private GameObject currentPlayer;
+	protected AudioSource spawnAudio;
+	protected Death death;
 
 	private void Awake()
 	{
+		spawnAudio = GetComponent<AudioSource>();
 		Spawn();
 	}
 
@@ -21,10 +25,10 @@ public class PlayerSpawner : MonoBehaviour
 	{
 		if(currentPlayer != null)
 		{
-			Death death = currentPlayer.GetComponent<Death>();
+			death = currentPlayer.GetComponent<Death>();
 			if(death)
 			{
-				death.OnDeath += Spawn; 
+				death.OnDeath += SpawnPlayer; 
 			}
 		}
 	}
@@ -33,10 +37,10 @@ public class PlayerSpawner : MonoBehaviour
 	{
 		if (currentPlayer != null)
 		{
-			Death death = currentPlayer.GetComponent<Death>();
+			death = currentPlayer.GetComponent<Death>();
 			if (death)
 			{
-				death.OnDeath -= Spawn;
+				death.OnDeath -= SpawnPlayer;
 			}
 		}
 	}
@@ -61,5 +65,13 @@ public class PlayerSpawner : MonoBehaviour
 				vcam.Follow = currentPlayer.transform;
 			}
 		}
+
+		spawnAudio.PlayOneShot(spawnAudio.clip);
+	}
+
+	private void SpawnPlayer()
+	{
+		levelManager.totalDeaths++;
+		Spawn();
 	}
 }

@@ -7,6 +7,8 @@ public class PlayerDeadState : StateMachineState
 	{
 		rbody.velocity = new Vector2(0, rbody.velocity.y);
 		animator.SetBool(input.isAliveHash, false);
+		owner.GetAudioSource.clip = owner.deathClip;
+		owner.GetAudioSource.PlayOneShot(owner.deathClip);
 	}
 
 	public override void StateExit(PlayerControllerDynamic2D owner, InputContext input, Rigidbody2D rbody, Animator animator)
