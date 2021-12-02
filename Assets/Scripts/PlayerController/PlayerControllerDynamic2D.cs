@@ -181,6 +181,7 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 	{
 		if(context.action.id == pauseID)
 		{
+			gameManager.Pause();
 			inputContext.paused = !inputContext.paused;
 		}
 	}

@@ -129777,6 +129777,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4770614153595503445, guid: 23eba8774419d304f880216a47f4a7cf, type: 3}
+      propertyPath: m_Transition
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4770614153595503445, guid: 23eba8774419d304f880216a47f4a7cf, type: 3}
+      propertyPath: m_SpriteState.m_SelectedSprite
+      value: 
+      objectReference: {fileID: 21300750, guid: 1a2b20d8c68c0a047a66c566847bd9aa, type: 3}
     - target: {fileID: 4770614154465592208, guid: 23eba8774419d304f880216a47f4a7cf, type: 3}
       propertyPath: m_Pivot.x
       value: 0
