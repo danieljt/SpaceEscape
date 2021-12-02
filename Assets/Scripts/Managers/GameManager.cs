@@ -49,6 +49,7 @@ public class GameManager : ScriptableObject
 		nextLevel = nextScene;
 		pickUpsCollected += newPickUpsCollected;
 		pickUpsTotal += newPickUpsTotal;
+		totalDeaths += deaths;
 	}
 
 	/// <summary>
