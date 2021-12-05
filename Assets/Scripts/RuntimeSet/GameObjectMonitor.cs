@@ -24,7 +24,7 @@ public class GameObjectMonitor : MonoBehaviour
 		if ((disableEventListener != null) && (enableEventListener != null))
 		{
 			disableEventListener.OnGameEventTriggered -= DisableObjects;
-			enableEventListener.OnGameEventTriggered += EnableObjects;
+			enableEventListener.OnGameEventTriggered -= EnableObjects;
 		}
 	}
 

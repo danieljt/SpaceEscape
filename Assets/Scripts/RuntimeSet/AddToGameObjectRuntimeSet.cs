@@ -26,7 +26,7 @@ public class AddToGameObjectRuntimeSet : MonoBehaviour
 
 	private void OnEnable()
 	{
-		if(set && behaviour == AddBehaviour.EnableAndDisable)
+		if (set && behaviour == AddBehaviour.EnableAndDisable)
 		{
 			set.Add(gameObject);
 		}

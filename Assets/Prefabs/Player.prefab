@@ -119,7 +119,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 2
   m_Sprite: {fileID: 7042227425959520519, guid: fa94db5579259f64e9b2e3c7b3a9d440, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -290,7 +290,6 @@ MonoBehaviour:
   jumpClip: {fileID: 8300000, guid: 335f95c0d065bc5448eaba01342886d7, type: 3}
   airJumpClip: {fileID: 8300000, guid: 9e4f18c85d2b73d46ac71011be82e881, type: 3}
   deathClip: {fileID: 8300000, guid: 43448524b5981a64a92475fbb049e37c, type: 3}
-  aliveClip: {fileID: 8300000, guid: 90d161edfb2ae02418a04277e00972fe, type: 3}
   currentState: {fileID: 11400000, guid: 26f71d9d56fccef43aeec10a2c509bea, type: 2}
 --- !u!114 &4172366136343516731
 MonoBehaviour:
