@@ -13,6 +13,22 @@ public class PlayerGroundLocomotionState : StateMachineState
 		owner.JumpCounter = owner.NumberOfAirJumps;
 		animator.SetBool(input.isGroundedHash, true);
 		animator.SetFloat(input.horizontalSpeedHash, Mathf.Abs(xVelocity));
+
+		if (Mathf.Pow(xVelocity, 2) > 0.001f)
+		{
+			if (!owner.GetAudioSource.isPlaying)
+			{
+				owner.GetAudioSource.clip = owner.walkClip;
+				owner.GetAudioSource.Play();
+			}
+		}
+		else
+		{
+			if (owner.GetAudioSource.isPlaying)
+			{
+				owner.GetAudioSource.Stop();
+			}
+		}
 	}
 
 	public override void StateExit(PlayerControllerDynamic2D owner, InputContext input, Rigidbody2D rbody, Animator animator)

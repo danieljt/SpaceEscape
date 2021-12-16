@@ -143,6 +143,7 @@ public class PlayerControllerDynamic2D : MonoBehaviour
 		currentState.EvaluateTransitions(this, inputContext, playerBody);
 		currentState.StateFixedUpdate(this, inputContext, playerBody, animator);
 	}
+
 	#endregion
 
 	#region input functions

@@ -675,6 +675,15 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 2407099463669367265, guid: a40f4581fdbf2ba47bf715967016a8f2, type: 3}
+      propertyPath: m_Text
+      value: All control and navigation systems have been destroyed. The ship is
+        drifting.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2407099463669367265, guid: a40f4581fdbf2ba47bf715967016a8f2, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4011729407148990565, guid: a40f4581fdbf2ba47bf715967016a8f2, type: 3}
       propertyPath: m_RootOrder
       value: 2

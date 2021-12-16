@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Hold SPACE/SHIFT to jump higher
+  m_Text: Hold SPACE/LEFT CTRL to jump higher
 --- !u!1 &784103888711410363
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,7 +674,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Press SPACE/SHIFT midair to jump again
+  m_Text: Press SPACE/LEFT CTRL midair to jump again
 --- !u!1 &784103889663778670
 GameObject:
   m_ObjectHideFlags: 0

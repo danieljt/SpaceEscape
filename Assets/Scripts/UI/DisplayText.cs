@@ -13,12 +13,15 @@ public class DisplayText : MonoBehaviour
 	protected Animator animator;
 	protected AnimatorClipInfo clipInfo;
 	protected int triggerHash = Animator.StringToHash("isActive");
+	protected Color color;
 
 	private void Awake()
 	{
 		text = GetComponent<Text>();
 		animator = GetComponent<Animator>();
-		text.color = new Vector4(255, 255, 255, 0);
+		color = text.color;
+		color.a = 0;
+		text.color = color;
 	}
 
 	/// <summary>

@@ -10,10 +10,19 @@ using UnityEngine.UI;
 public class Introduction : MonoBehaviour
 {
 	[SerializeField] protected List<DisplayText> texts;
+	[SerializeField] protected bool runOnStart;
 
 	public void Display()
 	{
 		StartCoroutine(DisplayText());
+	}
+
+	private void Start()
+	{
+		if(runOnStart)
+		{
+			StartCoroutine(DisplayText());
+		}
 	}
 
 	/// <summary>

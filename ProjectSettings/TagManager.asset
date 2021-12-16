@@ -38,6 +38,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Space
+    uniqueID: 2274746611
+    locked: 0
+  - name: Walls
+    uniqueID: 2607079319
+    locked: 0
+  - name: Objects
+    uniqueID: 432781279
+    locked: 0
+  - name: Collision
+    uniqueID: 2471873011
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
